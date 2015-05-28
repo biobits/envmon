@@ -44,3 +44,4 @@ Temporary Items
 
 # Python compilates
 .pyc
+*.Rhistory

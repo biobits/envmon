@@ -7,8 +7,11 @@ actsenslist=[1,2] # Liste der aktiven Sensoren, sollte aus DB kommen
 
 while True:
     wert = s.readline()
+    d = datetime.datetime.now()
+    dw = str(unicode(d))
     f=open('/srv/data/PiShared/data/klimalogSer.log','a')
-    f.writelines(wert)
+    logtext = dw + '\t' + wert
+    f.writelines(logtext)
     f.close()
     for num in actsenslist:
         temp=tmb.holeTemperatur(wert,num)
@@ -19,12 +22,4 @@ while True:
         except Exception as e:
             res=-1
             print(e.message)
-
-
-
-    
-
-
-
-
 
