@@ -3,7 +3,7 @@
 import psycopg2
 
 dbpath = '/srv/data/PiShared/data/bighomedata.db'
-pgcon = "host=10.77.0.1 dbname=env_measures  user=user password=pass"
+pgcon = "host=10.77.0.1 dbname=env_measures  user=usr password=pwd"
 
 
 def insertMessWert(datum, sensorid, temp, hum, locid):
@@ -32,7 +32,7 @@ def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
         res = 1
     except Exception as e:
         res = -1
-        raise e
+        print(e.message)
     finally:
         return res
 
@@ -57,13 +57,13 @@ def GetSensorLocIdPg(sensorid):
     try:
         pconn = psycopg2.connect(pgcon)
         pcur = pconn.cursor()
-        pcur.execute('''SELECT locationid FROM sensors WHERE idsensor=?''', (sensorid,))
+        pcur.execute("SELECT locationid FROM sensors WHERE idsensor=%s;", (sensorid,))
         pres = pcur.fetchone()
         pcur.close()
         pconn.close()
         res = pres[0]
     except Exception as e:
         res = -1
-        raise e
+        print(e.message)
     finally:
         return res

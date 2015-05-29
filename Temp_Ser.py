@@ -14,11 +14,11 @@ klimadatalog = '/srv/data/DataLogs/klimadatalogSer.log'
 while True:
     wert = s.readline()
     d = datetime.datetime.now()
-    dw = str(unicode(d))
-    f = open(klimalog, 'a')
-    logtext = dw + '\t' + wert
-    f.writelines(logtext)
-    f.close()
+    # dw = str(unicode(d))
+    # f = open(klimalog, 'a')
+    # logtext = dw + '\t' + wert
+    # f.writelines(logtext)
+    # f.close()
     for num in actsenslist:
         temp = tmb.holeTemperatur(wert, num)
         hum = tmb.holeSaturierung(wert, num)
@@ -29,6 +29,7 @@ while True:
 
         except Exception as e:
             res = -1
+            print(e.message)
             tmb.SchreibeErrorLog(d, 'Serielle Klimadaten - PG-DB', e.message, errorlog)
 
         try:
@@ -36,7 +37,7 @@ while True:
             tmb.SchreibeMessWertToFile(d, num, temp, hum, klimalog)
 
         except Exception as e:
-
+            print(e.message)
             tmb.SchreibeErrorLog(d, 'Serielle Klimadaten - Shared File', e.message, errorlog)
 
         try:
@@ -44,5 +45,5 @@ while True:
             tmb.SchreibeMessWertToFile(d, num, temp, hum, klimadatalog)
 
         except Exception as e:
-
+            print(e.message)
             tmb.SchreibeErrorLog(d, 'Serielle Klimadaten - Local File', e.message, errorlog)

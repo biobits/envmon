@@ -16,16 +16,18 @@ def SchreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
         locId = -2
 
     try:
-        logtext = s + '\t' + sensorid + '\t' + temp + '\t' + hum + '\n'
+        logtext = s + '\t' + str(sensorid) + '\t' + str(temp) + '\t' + str(hum) + '\n'
         f = open(logfile, 'a')
         f.write(logtext)
         f.close()
         resid = 1
 
-    except Exception:
+    except Exception as e:
         resid = -2
+        print(e.message)
 
     return resid
+
 
 
 def SchreibeErrorLog(timest, fehler, ausnahme, logfile):
@@ -39,8 +41,9 @@ def SchreibeErrorLog(timest, fehler, ausnahme, logfile):
         f.close()
         resid = 1
 
-    except Exception:
+    except Exception as e:
         resid = -2
+        print(e.message)
 
     return resid
 
