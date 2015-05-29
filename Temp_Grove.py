@@ -3,16 +3,18 @@
 #
 # In this project, the Temperature and humidity from the DHT sensor is printed on the DHT sensor
 
-from grovepi import *
 import datetime
+
+from grovepi import *
 import tempmon_bol as tpm
 
 dht_sensor_port = 7  # Connect the DHt sensor to port 7
 tmp_list = list()
 hum_list = list()
 
-errorlog = '/srv/data/PiShared/data/klimaerror.log'
+errorlog = '/srv/data/DataLogs/error.log'
 klimalog = '/srv/data/PiShared/data/klimalog.log'
+klimadatalog = '/srv/data/DataLogs/klimadatalog.log'
 
 
 def median(numbers):
@@ -34,11 +36,20 @@ while True:
             d = datetime.datetime.now()
             s = str(unicode(d))
 
-            logtext = s + '\t' + t + '\t' + h + '\n'
-            # print logtext
-            f = open(klimalog, 'a')
-            f.write(logtext)
-            f.close()
+            try:
+                foneres = tpm.SchreibeMessWertToFile(d, 99, temp, hum, klimalog)
+
+            except Exception as e:
+
+                tpm.SchreibeErrorLog(d, 'Temp_Grove - Logging to shared file', e.message, errorlog)
+
+            try:
+
+                ftwores = tpm.SchreibeMessWertToFile(d, 99, temp, hum, klimadatalog)
+            except Exception as e:
+
+                tpm.SchreibeErrorLog(d, 'Temp_Grove - Logging to local file', e.message, errorlog)
+
             # try:
             #     res = tpm.schreibeMessWert(99, temp, hum)
             # except Exception as e:
@@ -50,15 +61,10 @@ while True:
             try:
                 res = tpm.SchreibeMessWertPg(d, 99, temp, hum)
             except Exception as e:
-                errortext = s + '\t' + 'Temp_Grove - PG-DB' + '\t' + e.message
-                k = open(errorlog, 'a')
-                k.write(errortext)
-                k.close()
+                tpm.SchreibeErrorLog(d, 'Temp_Grove - PG-DB', e.message, errorlog)
 
             del tmp_list[:]
             del hum_list[:]
     except (IOError, TypeError) as e:
-        fehlerlog = s + '\t' + 'Temp_Grove - Main' + '\t' + e.message
-        er = open(errorlog, 'a')
-        er.write(fehlerlog)
-        er.close()
+
+        tpm.SchreibeErrorLog(d, 'Temp_Grove - Main', e.message, errorlog)

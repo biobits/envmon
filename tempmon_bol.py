@@ -5,9 +5,9 @@ import tempmon_dal as tmdal
 klimalog = '/srv/data/PiShared/data/klimalogSerFile.log'
 
 
-def schreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
+def SchreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
     locid = -1
-    resid=-1
+    resid = -1
     s = str(unicode(timest))
 
     try:
@@ -20,7 +20,24 @@ def schreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
         f = open(logfile, 'a')
         f.write(logtext)
         f.close()
-        resid=1
+        resid = 1
+
+    except Exception:
+        resid = -2
+
+    return resid
+
+
+def SchreibeErrorLog(timest, fehler, ausnahme, logfile):
+    resid = -1
+    s = str(unicode(timest))
+
+    try:
+        logtext = s + '\t' + fehler + '\t' + ausnahme + '\n'
+        f = open(logfile, 'a')
+        f.write(logtext)
+        f.close()
+        resid = 1
 
     except Exception:
         resid = -2
