@@ -39,10 +39,18 @@ while True:
             f = open(klimalog, 'a')
             f.write(logtext)
             f.close()
+            # try:
+            #     res = tpm.schreibeMessWert(99, temp, hum)
+            # except Exception as e:
+            #     errortext = s + '\t' + 'Temp_Grove - DB' + '\t' + e.message
+            #     k = open(errorlog, 'a')
+            #     k.write(errortext)
+            #     k.close()
+
             try:
-                res = tpm.schreibeMessWert(99, temp, hum)
+                res = tpm.SchreibeMessWertPg(d, 99, temp, hum)
             except Exception as e:
-                errortext = s + '\t' + 'Temp_Grove - DB' + '\t' + e.message
+                errortext = s + '\t' + 'Temp_Grove - PG-DB' + '\t' + e.message
                 k = open(errorlog, 'a')
                 k.write(errortext)
                 k.close()
@@ -54,6 +62,3 @@ while True:
         er = open(errorlog, 'a')
         er.write(fehlerlog)
         er.close()
-
-
-
