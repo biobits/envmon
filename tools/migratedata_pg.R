@@ -1,18 +1,20 @@
 library (sqldf)
 library(RPostgreSQL) 
 
-data <- read.table("F:/PiShared/PiShared/data/klimalog.log", sep="\t",header=TRUE,col.names=c("datum","temp","hum"))
+data <- read.table("c:/DATA/PiShared/KlimaLogBak/MissingDta/klimalog.log", sep="\t",header=TRUE,col.names=c("datum","temp","hum"))
 
 
-options(sqldf.RPostgreSQL.user ="USER", 
-        sqldf.RPostgreSQL.password ="PASS",
+options(sqldf.RPostgreSQL.user ="user", 
+        sqldf.RPostgreSQL.password ="pwd",
         sqldf.RPostgreSQL.dbname ="env_measures",
-        sqldf.RPostgreSQL.host ="192.168.2.211", 
+        sqldf.RPostgreSQL.host ="10.77.0.1", 
         sqldf.RPostgreSQL.port =5432)
 
-tstamps<-sqldf("select distinct timestamp from messwerte")
+tstamps<-sqldf("select distinct timestamp from messwerte where sensorid=99")
 
-missingdat<-sqldf("SELECT * from data where datum not in (select distinct timestamp from tstamps)",drv="SQLite")
+sqldf("select strftime('%Y-%m-%d %H:%M:%S', datum),temp,hum from data",drv="SQLite")
+
+missingdat<-sqldf("SELECT * from data where strftime('%Y-%m-%d %H:%M:%S', datum) not in (select distinct timestamp from tstamps)",drv="SQLite")
 
 mindat<-sqldf("insert ")
 

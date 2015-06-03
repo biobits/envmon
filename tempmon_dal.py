@@ -23,10 +23,11 @@ def insertMessWert(datum, sensorid, temp, hum, locid):
 
 
 def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
+    s = str(unicode(datum))
     try:
         pconn = psycopg2.connect(pgcon)
         pcur = pconn.cursor()
-        pcur.executemany('''INSERT INTO messwerte VALUES(%s,%s,%s,%s,%s)''', (datum, sensorid, temp, hum, locid))
+        pcur.execute("INSERT INTO messwerte VALUES(%s,%s,%s,%s,%s)", (datum, sensorid, temp, hum, locid))
         pconn.commit()
         pconn.close()
         res = 1
