@@ -17,9 +17,12 @@ klimalog = '/srv/data/PiShared/data/klimalog.log'
 klimadatalog = '/srv/data/DataLogs/klimadatalog.log'
 
 
-def median(numbers):
-    return (sorted(numbers)[int(round((len(numbers) - 1) / 2.0))] + sorted(numbers)[
-        int(round((len(numbers) - 1) // 2.0))]) / 2.0
+def median(x):
+    x = [value for value in x if not math.isnan(value)]
+    m, r = divmod(len(x), 2)
+    if r:
+        return sorted(x)[m]
+    return sum(sorted(x)[m - 1:m + 1]) / 2.0
 
 
 while True:
@@ -28,7 +31,7 @@ while True:
         tmp_list.append(temp)
         hum_list.append(hum)
         # print  "\ttemp =", temp, "C\thumadity =", hum,"%"
-        if len(tmp_list) == 300 or len(hum_list) == 300:
+        if len(tmp_list) == 301 or len(hum_list) == 301:
             temp = median(tmp_list)
             hum = median(hum_list)
             t = str(temp)
