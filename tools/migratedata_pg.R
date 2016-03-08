@@ -1,20 +1,21 @@
 library (sqldf)
 library(RPostgreSQL) 
+library(dplyr)
 
 
-data <- read.table("F:/PiShared/PiShared/KlimaLogBak/20151009/klimadatalogSer.log", sep="\t",header=FALSE,col.names=c("datum","ID","temp","hum"))
-#data <- read.table("c:/DATA/PiShared/KlimaLogBak/MissingDta/klimalog.log", sep="\t",header=TRUE,col.names=c("datum","temp","hum"))
+data <- read.table("c:/DATA/PiShared/KlimaLogBak/20151220/klimadatalogSer.log", sep="\t",header=FALSE,col.names=c("datum","ID","temp","hum"))
+#data <- read.table("c:/DATA/PiShared/KlimaLogBak/20151220/klimalog.log", sep="\t",header=TRUE,col.names=c("datum","temp","hum"))
 
 
-options(sqldf.RPostgreSQL.user ="user", 
-        sqldf.RPostgreSQL.password ="pwd",
+options(sqldf.RPostgreSQL.user ="stb", 
+        sqldf.RPostgreSQL.password ="jz43ed97",
 
         sqldf.RPostgreSQL.dbname ="env_measures",
         sqldf.RPostgreSQL.host ="10.77.0.1", 
         sqldf.RPostgreSQL.port =5432)
 
 
-tstamps<-sqldf("select distinct date(timestamp) as tag from messwerte where sensorid !=99")
+tstamps<-sqldf("select distinct date(timestamp) as tag from messwerte where sensorid =99")
 data<-cbind(data,tag=as.Date(data$datum,"%Y-%m-%d"))
 # nur tage
 # sqldf("select strftime('%Y-%m-%d', datum) as dat,datum from data",drv="SQLite")
@@ -43,10 +44,12 @@ sqldf("create table messwerte_bak as select * from messwerte",dbname = dbfile)
 
 sqldf("select * from messwerte_bak",dbname = dbfile)
 
-mda<-missingdat%>%filter(ID==2)%>%select(datum,ID,temp=as.numeric(temp),hum=as.numeric(hum),tag)
+mda<-missingdat%>%filter(ID==99)%>%select(datum,ID,temp=as.numeric(temp),hum=as.numeric(hum),tag)
 head(mda)
-transfer<-sqldf("insert into messwerte select to_timestamp(datum, 'YYYY-MM-DD HH24:MI:SS'), 2,
-                cast(temp as real),cast(hum as real), 3 from mda where temp is not null ")
+transfer<-sqldf("insert into messwerte select to_timestamp(datum, 'YYYY-MM-DD HH24:MI:SS'), 99,
+                cast(temp as real),cast(hum as real), 1 from mda where temp is not null 
+                --and temp !='None'
+                and hum is not null")
 transfer
 sqldf("select * from messwerte limit 100")
 
