@@ -3,19 +3,19 @@ library(RPostgreSQL)
 library(dplyr)
 
 
-data <- read.table("c:/DATA/PiShared/KlimaLogBak/20151220/klimadatalogSer.log", sep="\t",header=FALSE,col.names=c("datum","ID","temp","hum"))
-#data <- read.table("c:/DATA/PiShared/KlimaLogBak/20151220/klimalog.log", sep="\t",header=TRUE,col.names=c("datum","temp","hum"))
+data <- read.table("C:/DATA/tmp/klimadatalogSer.log", sep="\t",header=FALSE,col.names=c("datum","ID","temp","hum"))
+#data <- read.table("C:/DATA/tmp/klimalog.log", sep="\t",header=F,col.names=c("datum","ID","temp","hum"))
 
 
-options(sqldf.RPostgreSQL.user ="stb", 
-        sqldf.RPostgreSQL.password ="jz43ed97",
+options(sqldf.RPostgreSQL.user ="user", 
+        sqldf.RPostgreSQL.password ="pass",
 
         sqldf.RPostgreSQL.dbname ="env_measures",
-        sqldf.RPostgreSQL.host ="10.77.0.1", 
+        sqldf.RPostgreSQL.host ="192.168.77.177", 
         sqldf.RPostgreSQL.port =5432)
 
 
-tstamps<-sqldf("select distinct date(timestamp) as tag from messwerte where sensorid =99")
+tstamps<-sqldf("select distinct date(timestamp) as tag from messwerte where sensorid =2")
 data<-cbind(data,tag=as.Date(data$datum,"%Y-%m-%d"))
 # nur tage
 # sqldf("select strftime('%Y-%m-%d', datum) as dat,datum from data",drv="SQLite")
