@@ -8,7 +8,7 @@ klimalog = '/srv/data/PiShared/data/klimalogSerFile.log'
 def SchreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
     locid = -1
     resid = -1
-    s = str(unicode(timest))
+    s = str(timest)
 
     try:
         locId = tmdal.GetSensorLocIdPg(sensorid)
@@ -32,7 +32,7 @@ def SchreibeMessWertToFile(timest, sensorid, temp, hum, logfile):
 
 def SchreibeErrorLog(timest, fehler, ausnahme, logfile):
     resid = -1
-    s = str(unicode(timest))
+    s = str(timest)
 
     try:
         logtext = s + '\t' + fehler + '\t' + ausnahme + '\n'

@@ -3,7 +3,7 @@
 import psycopg2
 
 dbpath = '/srv/data/PiShared/data/bighomedata.db'
-pgcon = "host=10.77.0.1 dbname=env_measures  user=usr password=pwd"
+pgcon = "host=10.74.0.1 dbname=env_measures  user=stb password=9Hyperion&10"
 
 
 def insertMessWert(datum, sensorid, temp, hum, locid):
@@ -23,7 +23,7 @@ def insertMessWert(datum, sensorid, temp, hum, locid):
 
 
 def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
-    s = str(unicode(datum))
+    s = str(datum)
     try:
         pconn = psycopg2.connect(pgcon)
         pcur = pconn.cursor()

@@ -22,16 +22,18 @@ while True:
         [temp, hum] = dht(dht_sensor_port, 2)  # Get the temperature and Humidity from the DHT sensor
         tmp_list.append(temp)
         hum_list.append(hum)
-        # print  "\ttemp =", temp, "C\thumadity =", hum,"%"
-        if len(tmp_list) == 600 or len(hum_list) == 600:
+	#comment in prod
+        print  "\ttemp =", temp, "C\thumadity =", hum,"%"
+        if len(tmp_list) == 300 or len(hum_list) == 300:
             t = str(median(tmp_list))
             h = str(median(hum_list))
             d = datetime.datetime.now()
             s = str(unicode(d))
 
             logtext = s + '\t' + t + '\t' + h + '\n'
-            # print logtext
-            f = open('/srv/data/PiShared/klimalog.log', 'a')
+            #comment in prod
+	    print logtext
+            f = open('/srv/data/PiShared/data/klimalog.log', 'a')
             f.write(logtext)
             f.close()
 
