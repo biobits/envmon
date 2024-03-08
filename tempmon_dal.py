@@ -3,7 +3,7 @@
 import psycopg2
 
 dbpath = '/srv/data/PiShared/data/bighomedata.db'
-pgcon = "host=10.74.0.1 dbname=env_measures  user=stb password=9Hyperion&10"
+pgcon = "host=192.168.77.177 dbname=env_measures  user=stb password=9Hyperion&10"
 
 
 def insertMessWert(datum, sensorid, temp, hum, locid):

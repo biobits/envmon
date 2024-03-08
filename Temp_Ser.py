@@ -12,13 +12,9 @@ klimalog = '/srv/data/PiShared/data/klimadatalogSer.log'
 klimadatalog = '/srv/data/DataLogs/klimadatalogSer.log'
 
 while True:
-    wert = s.readline()
+    wert = s.readline().decode()
     d = datetime.datetime.now()
-    # dw = str(unicode(d))
-    # f = open(klimalog, 'a')
-    # logtext = dw + '\t' + wert
-    # f.writelines(logtext)
-    # f.close()
+
     for num in actsenslist:
         temp = tmb.holeTemperatur(wert, num)
         hum = tmb.holeSaturierung(wert, num)
