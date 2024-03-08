@@ -2,7 +2,7 @@
 # temp_mon_launcher.sh
 #
  
-DIR=/srv/scripts/Temp_Monitor
+DIR=/srv/scripts/envmon
 SCRIPT=$DIR/Temp_Grove.py
 
 sudo python $SCRIPT
