@@ -37,7 +37,7 @@ while True:
             t = str(temp)
             h = str(hum)
             d = datetime.datetime.now()
-            s = str(unicode(d))
+            s = str(d)
 
             try:
                 foneres = tpm.SchreibeMessWertToFile(d, 99, temp, hum, klimalog)
