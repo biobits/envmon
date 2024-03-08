@@ -1,5 +1,5 @@
 ﻿import datetime
-
+ 
 import tempmon_dal as tmdal
 
 klimalog = '/srv/data/PiShared/data/klimalogSerFile.log'

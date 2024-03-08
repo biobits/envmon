@@ -2,7 +2,7 @@
 #
 #
 # In this project, the Temperature and humidity from the DHT sensor is printed on the DHT sensor
-
+ 
 import datetime
 
 from grovepi import *

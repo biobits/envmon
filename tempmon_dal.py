@@ -1,5 +1,5 @@
 ﻿import sqlite3
-
+ 
 import psycopg2
 
 dbpath = '/srv/data/PiShared/data/bighomedata.db'
