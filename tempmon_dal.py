@@ -82,7 +82,8 @@ def GetSensorLocIdPg(sensorid):
 
 def GetSensorLocIdDuck(sensorid):
     try:
-        res = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE id=?;",[sensorid])
+        resp = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE id=?;",[sensorid])
+        res=resp[0][0]
     except Exception as e:
         res = -1
         print(e.message)
