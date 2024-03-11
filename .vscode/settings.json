@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "DuckDB",
+            "name": "klimapi",
+            "database": "${workspaceFolder:envmon}/KlimaPi.duckdb"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

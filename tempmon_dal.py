@@ -1,10 +1,12 @@
 ﻿import sqlite3
- 
 import psycopg2
+import duckDBHelper as dbh
+import pandas as pd
+
 
 dbpath = '/srv/data/PiShared/data/bighomedata.db'
 pgcon = "host=192.168.77.177 dbname=env_measures  user=stb password=9Hyperion&10"
-
+#duckdbconn='KlimaPi.duckdb'
 
 def insertMessWert(datum, sensorid, temp, hum, locid):
     try:
@@ -37,6 +39,15 @@ def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
     finally:
         return res
 
+def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
+    
+    try:
+        res = dbh.InsertOrUpdateDuckDB("INSERT INTO messwerte VALUES(%s,%s,%s,%s,%s)", (datum, sensorid, temp, hum, locid))
+    except Exception as e:
+        res = -1
+        print(e.message)
+    finally:
+        return res
 
 def getSensorLocId(sensorid):
     try:
@@ -63,6 +74,15 @@ def GetSensorLocIdPg(sensorid):
         pcur.close()
         pconn.close()
         res = pres[0]
+    except Exception as e:
+        res = -1
+        print(e.message)
+    finally:
+        return res
+
+def GetSensorLocIdDuck(sensorid):
+    try:
+        res = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE idsensor=%s;", (sensorid,))
     except Exception as e:
         res = -1
         print(e.message)
