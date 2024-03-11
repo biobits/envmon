@@ -28,6 +28,14 @@ while True:
             print(e.message)
             tmb.SchreibeErrorLog(d, 'Serielle Klimadaten - PG-DB', e.message, errorlog)
 
+        try: 
+            res=tmb.SchreibeMessWertDuck(d,num,temp,hum)
+        except Exception as e:
+            res = -1
+            print(e.message)
+            tmb.SchreibeErrorLog(d, 'Serielle Klimadaten - DuckDB', e.message, errorlog)
+            
+
         try:
 
             tmb.SchreibeMessWertToFile(d, num, temp, hum, klimalog)

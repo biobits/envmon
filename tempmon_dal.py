@@ -42,7 +42,7 @@ def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
 def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
     
     try:
-        res = dbh.InsertOrUpdateDuckDB("INSERT INTO messwerte VALUES(%s,%s,%s,%s,%s)", (datum, sensorid, temp, hum, locid))
+        res = dbh.InsertOrUpdateDuckDB("INSERT INTO measurements VALUES(?,?,?,?,?)", [datum, sensorid, temp, hum, locid])
     except Exception as e:
         res = -1
         print(e.message)
@@ -82,7 +82,7 @@ def GetSensorLocIdPg(sensorid):
 
 def GetSensorLocIdDuck(sensorid):
     try:
-        res = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE idsensor=%s;", (sensorid,))
+        res = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE id=?;",[sensorid])
     except Exception as e:
         res = -1
         print(e.message)

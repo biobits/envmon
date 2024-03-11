@@ -4,11 +4,11 @@ import duckdb
 
 duckdbconn='KlimaPi.duckdb'
     
-def ExecuteDuckDBQuery(query):
+def ExecuteDuckDBQuery(query,params=None):
     try:
         conn = duckdb.connect(duckdbconn)
         cur = conn.cursor()
-        cur.execute(query)
+        cur.execute(query,params)
         res = cur.fetch_df()
         cur.close()
         conn.close()
@@ -18,11 +18,11 @@ def ExecuteDuckDBQuery(query):
     finally:
         return res
     
-def InsertOrUpdateDuckDB(insertquery):
+def InsertOrUpdateDuckDB(insertquery,params):
     try:
         conn = duckdb.connect(duckdbconn)
         cur = conn.cursor()
-        cur.execute(insertquery)
+        cur.execute(insertquery,params)
         res = 1
         cur.close()
         conn.close()
