@@ -60,6 +60,11 @@ while True:
             #     k = open(errorlog, 'a')
             #     k.write(errortext)
             #     k.close()
+                
+            try:
+                res = tpm.SchreibeMessWertDuck(d, 99, temp, hum)
+            except Exception as e:
+                tpm.SchreibeErrorLog(d, 'Temp_Grove - DuckDB', e.message, errorlog)
 
             try:
                 res = tpm.SchreibeMessWertPg(d, 99, temp, hum)

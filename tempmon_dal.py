@@ -42,7 +42,7 @@ def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
 def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
     
     try:
-        res = dbh.InsertOrUpdateDuckDB("INSERT INTO measurements VALUES(?,?,?,?,?)", [datum, sensorid, temp, hum, locid])
+        res = dbh.InsertOrUpdateDuckDB("INSERT INTO measurements (\"timestamp\", sensor_id, temperature_celsius, humidity, location_id) VALUES(?,?,?,?,?)", [datum, sensorid, temp, hum, locid])
     except Exception as e:
         res = -1
         print(e.message)
