@@ -66,12 +66,12 @@ def SchreibeMessWertPg(timest, sensorid, temp, hum):
     return resid
 
 
-def SchreibeMessWertDuck(timest, sensorid, temp, hum):
+""" def SchreibeMessWertDuck(timest, sensorid, temp, hum):
     locId = tmdal.GetSensorLocIdDuck(sensorid)
 
     resid = tmdal.InsertNewMesswerteDuck(timest, sensorid, temp, hum, locId)
 
-    return resid
+    return resid """
 
 
 def holeTemperatur(messwert, sensornum):

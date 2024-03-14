@@ -1,6 +1,6 @@
 ﻿import sqlite3
 import psycopg2
-import duckDBHelper as dbh
+#import duckDBHelper as dbh
 import pandas as pd
 
 
@@ -39,7 +39,7 @@ def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
     finally:
         return res
 
-def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
+""" def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
     
     try:
         res = dbh.InsertOrUpdateDuckDB("INSERT INTO measurements (\"timestamp\", sensor_id, temperature_celsius, humidity, location_id) VALUES(?,?,?,?,?)", [datum, sensorid, temp, hum, locid])
@@ -48,7 +48,7 @@ def InsertNewMesswerteDuck(datum, sensorid, temp, hum, locid):
         print(e.message)
     finally:
         return res
-
+ """
 def getSensorLocId(sensorid):
     try:
         db = sqlite3.connect(dbpath)
@@ -80,7 +80,7 @@ def GetSensorLocIdPg(sensorid):
     finally:
         return res
 
-def GetSensorLocIdDuck(sensorid):
+""" def GetSensorLocIdDuck(sensorid):
     try:
         resp = dbh.ExecuteDuckDBQuery("SELECT location_id FROM sensors WHERE id=?;",[sensorid])
         res=resp[0][0]
@@ -88,4 +88,4 @@ def GetSensorLocIdDuck(sensorid):
         res = -1
         print(e.message)
     finally:
-        return res
+        return res """
