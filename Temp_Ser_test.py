@@ -21,8 +21,8 @@ print("Hum Sensor 1: ",tmb.holeSaturierung(measure,1))
 print("Temp Sensor 2: ",tmb.holeTemperatur(measure,2))
 print("Hum Sensor 2: ",tmb.holeSaturierung(measure,2))
 
-res=tmb.SchreibeMessWertDuck(d,1,tmb.holeTemperatur(measure,1),tmb.holeSaturierung(measure,1))
-#res=tmb.schreibeMessWert(1,tmb.holeTemperatur(measure,1),tmb.holeSaturierung(measure,1))
+#res=tmb.SchreibeMessWertDuck(d,1,tmb.holeTemperatur(measure,1),tmb.holeSaturierung(measure,1))
+res=tmb.schreibeMessWert(1,tmb.holeTemperatur(measure,1),tmb.holeSaturierung(measure,1))
 
 print(res)
 

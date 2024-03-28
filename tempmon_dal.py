@@ -4,7 +4,7 @@ import psycopg2
 import pandas as pd
 
 
-dbpath = '/srv/data/PiShared/data/bighomedata.db'
+dbpath = 'KlimaPi.sqlite'
 pgcon = "host=192.168.77.177 dbname=env_measures  user=stb password=9Hyperion&10"
 #duckdbconn='KlimaPi.duckdb'
 
@@ -12,7 +12,7 @@ def insertMessWert(datum, sensorid, temp, hum, locid):
     try:
         db = sqlite3.connect(dbpath)
         cursor = db.cursor()
-        cursor.execute('''INSERT INTO messwerte(timestamp,sensorid,temp ,hum,locationid)
+        cursor.execute('''INSERT INTO measurements(timestamp,sensor_id,temperature_celsius ,humidity,location_id)
                   VALUES(?,?,?,?,?)''', (datum, sensorid, temp, hum, locid))
         db.commit()
         res = cursor.lastrowid
@@ -22,6 +22,7 @@ def insertMessWert(datum, sensorid, temp, hum, locid):
         raise e
     finally:
         return res
+    
 
 
 def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
@@ -54,7 +55,7 @@ def getSensorLocId(sensorid):
         db = sqlite3.connect(dbpath)
         cursor = db.cursor()
         locid = (0,)
-        cursor.execute('''SELECT locationid FROM sensors WHERE idsensor=?''', (sensorid,))
+        cursor.execute('''SELECT location_id FROM sensors WHERE id=?''', (sensorid,))
         locid = cursor.fetchone()
         res = locid[0]
         db.close()
