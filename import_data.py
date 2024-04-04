@@ -11,6 +11,7 @@ import tempmon_dal as tmd
 dbpath = 'KlimaPi.sqlite'
 
 file_to_import='klimadatalogTest.log'
+
 #DB Connection
 con = sqlite3.connect(dbpath)
 
@@ -18,6 +19,7 @@ con = sqlite3.connect(dbpath)
 headers=['timestamp','sensorid','temp','hum']
 
 kdat=pd.read_csv(file_to_import,sep='\t',header=None,  names=headers)#,parse_dates=[0])
+kdat=kdat.sort_values(by=['timestamp'])
 
 # Read existing data in DB
 dbdat=pd.read_sql_query("SELECT * FROM measurements",con)
