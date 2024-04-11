@@ -26,10 +26,18 @@ dbdat=pd.read_sql_query("SELECT * FROM measurements",con)
 
 
 # Iterate over CSV Climatedata
-for index, row in kdat.iterrows():
+for index, row in kdat.iterrows(): 
     # get locationid
     locid=tmd.getSensorLocId(row['sensorid'])
-    res=tmd.insertMessWert(row['timestamp'],row['sensorid'],row['temp'],row['hum'],locid)
+    checked=tmd.CheckMessWertExists(row['timestamp'],row['sensorid'],row['temp'],row['hum'],locid)
+    if checked==0:
+        res=tmd.insertMessWert(row['timestamp'],row['sensorid'],row['temp'],row['hum'],locid)
+        print(res)
+    else:
+        print('Messwert existiert bereits')
+        print(row['timestamp'],row['sensorid'],row['temp'],row['hum'],locid,'\n')
+        
+
     #print(res)
 
 con.close()

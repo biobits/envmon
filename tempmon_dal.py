@@ -22,7 +22,24 @@ def insertMessWert(datum, sensorid, temp, hum, locid):
         raise e
     finally:
         return res
-    
+
+def CheckMessWertExists(datum, sensorid, temp, hum, locid):
+    try:
+        db = sqlite3.connect(dbpath)
+        cursor = db.cursor()
+        cursor.execute('''select count (*) as anz from  measurements where 
+                       timestamp=?
+                       and sensor_id=?
+                       and temperature_celsius=?
+                       and humidity=?
+                       and location_id=?''', (datum, sensorid, temp, hum, locid))
+        res = cursor.fetchone()[0]
+        db.close()
+    except Exception as e:
+        res = -1
+        raise e
+    finally:
+        return res   
 
 
 def InsertNewMesswertePg(datum, sensorid, temp, hum, locid):
